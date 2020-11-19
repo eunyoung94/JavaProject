@@ -153,7 +153,13 @@ public class Trainer extends JPanel{
       n_la_name.setPreferredSize(new Dimension(60,60));
       n_t_name.setPreferredSize(new Dimension(50,30));
       
-      
+      man.addActionListener((e) -> {
+          woman.setSelected(false);
+       });
+       woman.addActionListener((e) -> {
+          man.setSelected(false);
+       });
+       
       //회원이미지찾기버튼과 리스너연결 
       img_regist.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
@@ -170,7 +176,7 @@ public class Trainer extends JPanel{
    public void getTargetImage(String path) {
       img = kit.getImage(path);
    //   img = ImageUtil.getCustomSize(img, 135, 115);
-      
+      img = img.getScaledInstance(330, 280, Image.SCALE_SMOOTH);
    }
    
    public void findImage() {
@@ -184,7 +190,9 @@ public class Trainer extends JPanel{
 
    public void preview() {
       //paint로 그림 처리~~
-      can.repaint();
+	    if(img!=null) {
+	         can.repaint();
+	      }
    }
    
   

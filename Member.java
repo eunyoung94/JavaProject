@@ -28,8 +28,8 @@ import javax.swing.border.TitledBorder;
 
 public class Member extends JPanel{
    JPanel input,p_west,p_center,c_center,c_north,can,bt_north;
-   JTextField t_name,t_age,t_phone,t_mail,t_address,n_t_name ;
-   JLabel la_name,la_age,la_phone,la_mail,la_address,n_la_name;
+   JTextField t_name,t_age,t_phone,t_mail,t_address,n_t_name,t_key,t_locker;
+   JLabel la_name,la_age,la_phone,la_mail,la_address,n_la_name,la_key,la_locker;
    JButton img_regist,regist,edit,del,search,list;
    JRadioButton man,woman;
    JScrollPane scroll;
@@ -46,7 +46,7 @@ public class Member extends JPanel{
 
    
    
-   public Member() {
+   public Member(MainPage mainPage) {
 
    //서쪽영역 생성
       
@@ -64,6 +64,10 @@ public class Member extends JPanel{
       t_mail=new JTextField(22);
       la_address= new JLabel("주소");
       t_address=new JTextField(22);
+      la_key= new JLabel("회원번호");
+      t_key=new JTextField(10);
+      la_locker= new JLabel(" 락카키");
+      t_locker=new JTextField(5);
       can = new JPanel() {
          public void paint(Graphics g) {
             g.drawImage(img, 0, 0, can);
@@ -90,6 +94,10 @@ public class Member extends JPanel{
       p_west.add(t_name);
       p_west.add(man);
       p_west.add(woman);
+      p_west.add(la_key);
+      p_west.add(t_key);
+      p_west.add(la_locker);
+      p_west.add(t_locker);
       p_west.add(la_age);
       p_west.add(t_age);
       p_west.add(la_phone);
@@ -98,9 +106,6 @@ public class Member extends JPanel{
       p_west.add(t_mail);
       p_west.add(la_address);
       p_west.add(t_address);
-      p_west.add(can);
-      p_west.add(img_regist);
-      //p_west.add(empty);
       p_west.add(la_ch1);
       p_west.add(ch1);
       p_west.add(la_ch2);
@@ -109,6 +114,11 @@ public class Member extends JPanel{
       p_west.add(ch3);
       p_west.add(la_ch4);
       p_west.add(ch4);
+      
+      
+      p_west.add(can);
+      p_west.add(img_regist);
+      //p_west.add(empty);
 
 
       p_west.add(regist);
@@ -116,17 +126,24 @@ public class Member extends JPanel{
       p_west.add(del);
       //서쪽 스타일적용 
       p_west.setPreferredSize(new Dimension(330,700));
-      la_name.setPreferredSize(new Dimension(40,60));
+      la_name.setPreferredSize(new Dimension(40,50));
       t_name.setPreferredSize(new Dimension(50,30));
-      la_age.setPreferredSize(new Dimension(40,60));
+      la_age.setPreferredSize(new Dimension(40,50));
       t_age.setPreferredSize(new Dimension(50,30));
-      la_phone.setPreferredSize(new Dimension(60,60));
+      la_phone.setPreferredSize(new Dimension(60,50));
       t_phone.setPreferredSize(new Dimension(50,30));
-      la_mail.setPreferredSize(new Dimension(40,60));
+      la_mail.setPreferredSize(new Dimension(40,50));
       t_mail.setPreferredSize(new Dimension(50,30));
-      la_address.setPreferredSize(new Dimension(40,60));
+      la_address.setPreferredSize(new Dimension(40,50));
       t_address.setPreferredSize(new Dimension(50,30));
-      can.setPreferredSize(new Dimension(330,280));
+      
+      la_key.setPreferredSize(new Dimension(60,50));
+      t_key.setPreferredSize(new Dimension(50,30));
+      la_locker.setPreferredSize(new Dimension(44,50));
+      t_locker.setPreferredSize(new Dimension(50,30));
+     
+      can.setPreferredSize(new Dimension(240,280));
+
       img_regist.setPreferredSize(new Dimension(280,30));
       //empty.setPreferredSize(new Dimension(340,20));
       regist.setPreferredSize(new Dimension(90,30));
@@ -173,7 +190,12 @@ public class Member extends JPanel{
       n_la_name.setPreferredSize(new Dimension(60,60));
       n_t_name.setPreferredSize(new Dimension(50,30));
       
-      
+      man.addActionListener((e) -> {
+          woman.setSelected(false);
+       });
+       woman.addActionListener((e) -> {
+          man.setSelected(false);
+       });
       //회원이미지찾기버튼과 리스너연결 
       img_regist.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
@@ -190,9 +212,9 @@ public class Member extends JPanel{
    public void getTargetImage(String path) {
       img = kit.getImage(path);
    //   img = ImageUtil.getCustomSize(img, 135, 115);
-      
+      img = img.getScaledInstance(330, 280, Image.SCALE_SMOOTH);
    }
-   
+
    public void findImage() {
       if(chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
       //파일정보를 구한다.    
@@ -204,12 +226,14 @@ public class Member extends JPanel{
 
    public void preview() {
       //paint로 그림 처리~~
-      can.repaint();
+	    if(img!=null) {
+	         can.repaint();
+	      }
    }
    
   
    
    public static void main(String[] args) {
-      new Member();
+      new Member(null);
    }
 }
