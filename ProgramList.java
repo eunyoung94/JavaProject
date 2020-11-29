@@ -1,10 +1,10 @@
-package project;
+package testapp;
 
 import javax.swing.table.AbstractTableModel;
 
 public class ProgramList extends AbstractTableModel {
    String[][] data = {};
-   String[] column = { "번호", "프로그램명", "요일", "시작일", "종료일", "금액","최대인원" };
+   String[] column = { "프로그램번호","트레이너","프로그램명", "요일", "시작일", "종료일","시간", "금액","회원아이디" ,"이미지"};
 
    @Override
    public int getColumnCount() {
